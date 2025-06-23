@@ -65,7 +65,7 @@ const handleSubmit = async () => {
             type="text" 
             class="w-full border border-app rounded-lg px-4 py-2 bg-transparent text-card focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 transition-all placeholder-gray-400"
             :class="{ 'border-red-500': v$.name.$error }"
-            placeholder="Nombre completo"
+            placeholder="Nombre y Apellido"
           />
           <p v-if="v$.name.$error" class="text-red-500 text-xs mt-1">Nombre es obligatorio</p>
         </div>
@@ -76,7 +76,7 @@ const handleSubmit = async () => {
             type="text" 
             class="w-full border border-app rounded-lg px-4 py-2 bg-transparent text-card focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 transition-all placeholder-gray-400"
             :class="{ 'border-red-500': v$.username.$error }"
-            placeholder="Usuario único"
+            placeholder="Usuario"
           />
           <p v-if="v$.username.$error" class="text-red-500 text-xs mt-1">Username es obligatorio</p>
         </div>
@@ -98,7 +98,7 @@ const handleSubmit = async () => {
             type="text" 
             class="w-full border border-app rounded-lg px-4 py-2 bg-transparent text-card focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 transition-all placeholder-gray-400"
             :class="{ 'border-red-500': v$.phone.$error }"
-            placeholder="Ej: 555-1234"
+            placeholder="Ej: 977593012"
           />
           <p v-if="v$.phone.$error" class="text-red-500 text-xs mt-1">Teléfono es obligatorio</p>
         </div>

@@ -39,7 +39,7 @@ const handleCancel = () => {
 };
 const deleteUser = (user) => {
   userStore.deleteUser(user.id);
-  emit('user-deleted');
+  emit('user-deleted', user);
 };
 </script>
 
