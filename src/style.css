@@ -11,6 +11,27 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --color-bg-app: #f5f7fa;
+  --color-bg-navbar: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-bg-modal: #f9fafb;
+  --color-bg-hover: #f0f4f8;
+  --color-text-main: #1a202c;
+  --color-text-navbar: #0f766e;
+  --color-text-navbar-contrast: #1a202c;
+  --color-text-card: #22223b;
+  --color-border: #e5e7eb;
+  --color-primary: #0ea5e9;
+  --color-primary-hover: #0369a1;
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-muted: #64748b;
+  --color-btn-bg: #0ea5e9;
+  --color-btn-bg-hover: #0369a1;
+  --color-btn-text: #fff;
+  --color-btn-secondary-bg: #f3f4f6;
+  --color-btn-secondary-bg-hover: #e5e7eb;
+  --color-btn-secondary-text: #22223b;
 }
 
 /* Light mode (default) */
@@ -76,7 +97,7 @@ button:focus-visible {
 /* App container */
 #app {
   width: 100%;
-  padding: 2rem;
+  padding: 0 !important;
   text-align: center;
 }
 
@@ -146,8 +167,11 @@ button:focus {
 /* Modo claro */
 .bg-app { background-color: #f9fafb; }
 .text-app { color: #1f2937; }
-.bg-navbar { background-color: #fff; }
-.text-navbar { color: #047857; }
+.bg-navbar { background: linear-gradient(90deg, #0f766e 0%, #14b8a6 100%); box-shadow: 0 2px 8px 0 rgba(20, 184, 166, 0.08); }
+.text-navbar { color: #fff; }
+.bg-navbar .font-bold { letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.bg-navbar .group:hover .absolute { background: #fff; height: 2px; }
+.bg-navbar .group:hover { color: #0f766e; }
 .bg-card { background-color: #fff; }
 .text-card { color: #1f2937; }
 .border-app { border-color: #e5e7eb; }
@@ -160,3 +184,100 @@ button:focus {
 .dark .bg-card { background-color: #1f2937; }
 .dark .text-card { color: #f3f4f6; }
 .dark .border-app { border-color: #374151; }
+
+/* Hover filas tabla según tema */
+.row-hover:hover {
+  background-color: #f3f4f6;
+}
+.dark .row-hover:hover {
+  background-color: #232b3a;
+}
+
+.dark {
+  --color-bg-app: #181c23;
+  --color-bg-navbar: #232b3a;
+  --color-bg-card: #232b3a;
+  --color-bg-modal: #232b3a;
+  --color-bg-hover: #232b3a;
+  --color-text-main: #f3f4f6;
+  --color-text-navbar: #34d399;
+  --color-text-navbar-contrast: #fff;
+  --color-text-card: #f3f4f6;
+  --color-border: #374151;
+  --color-primary: #38bdf8;
+  --color-primary-hover: #0ea5e9;
+  --color-success: #22d3ee;
+  --color-danger: #f87171;
+  --color-muted: #94a3b8;
+  --color-btn-bg: #38bdf8;
+  --color-btn-bg-hover: #0ea5e9;
+  --color-btn-text: #181c23;
+  --color-btn-secondary-bg: #232b3a;
+  --color-btn-secondary-bg-hover: #181c23;
+  --color-btn-secondary-text: #f3f4f6;
+}
+
+/* === Utilidades globales === */
+.bg-app { background: var(--color-bg-app); }
+.text-app { color: var(--color-text-main); }
+.bg-navbar { background: var(--color-bg-navbar); }
+.text-navbar { color: var(--color-text-navbar); }
+.text-navbar-contrast { color: var(--color-text-navbar-contrast); }
+.bg-card { background: var(--color-bg-card); }
+.text-card { color: var(--color-text-card); }
+.bg-modal { background: var(--color-bg-modal); }
+.border-app { border-color: var(--color-border); }
+.bg-hover { background: var(--color-bg-hover); }
+.text-muted { color: var(--color-muted); }
+
+/* Botones */
+.btn-primary {
+  background: var(--color-btn-bg);
+  color: var(--color-btn-text);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-primary:hover {
+  background: var(--color-btn-bg-hover);
+}
+.btn-secondary {
+  background: var(--color-btn-secondary-bg);
+  color: var(--color-btn-secondary-text);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-secondary:hover {
+  background: var(--color-btn-secondary-bg-hover);
+}
+
+/* Hover filas tabla según tema */
+.row-hover:hover {
+  background: var(--color-bg-hover);
+}
+
+/* Navbar moderno */
+.bg-navbar {
+  box-shadow: 0 2px 8px 0 rgba(20, 184, 166, 0.08);
+}
+.bg-navbar .font-bold {
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Quitar padding del div con id=app */
+#app {
+  padding: 0 !important;
+}
+
+/* Modal animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease;
+}
+
+/* Otros estilos globales previos (transiciones, scrollbars, etc.) se mantienen igual */

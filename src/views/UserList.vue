@@ -1,132 +1,105 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useUserStore } from '../store/user';
 import UserForm from '../components/UserForm.vue';
 
+const props = defineProps({
+  openEditForm: Function,
+  showUserForm: Boolean,
+  selectedUser: Object,
+  isEdit: Boolean
+});
+const emit = defineEmits(['open-edit-form', 'close-user-form', 'user-saved', 'user-deleted']);
+
 const userStore = useUserStore();
 const showForm = ref(false);
-const selectedUser = ref(null);
-const isEdit = ref(false);
+const selectedUserLocal = ref(null);
+const isEditLocal = ref(false);
 
 onMounted(() => {
   userStore.fetchUsers();
 });
 
-const openCreateForm = () => {
-  selectedUser.value = { name: '', username: '', email: '', phone: '' };
-  isEdit.value = false;
-  showForm.value = true;
-};
-
-const openEditForm = (user) => {
-  selectedUser.value = { ...user };
-  isEdit.value = true;
-  showForm.value = true;
-};
-
-const handleSaved = () => {
-  showForm.value = false;
-  selectedUser.value = null;
-};
-
-const handleCancel = () => {
-  showForm.value = false;
-  selectedUser.value = null;
-};
-
-const deleteUser = (user) => {
-  if (confirm(`¿Estás seguro de eliminar a ${user.name}?`)) {
-    userStore.deleteUser(user.id);
+watch(() => props.showUserForm, (val) => {
+  showForm.value = val;
+  if (val) {
+    selectedUserLocal.value = props.selectedUser;
+    isEditLocal.value = props.isEdit;
   }
+});
+
+const handleEdit = (user) => {
+  props.openEditForm(user);
+};
+const handleSaved = (action) => {
+  emit('user-saved', action);
+};
+const handleCancel = () => {
+  emit('close-user-form');
+};
+const deleteUser = (user) => {
+  userStore.deleteUser(user.id);
+  emit('user-deleted');
 };
 </script>
 
 <template>
-  <section class="p-4 sm:p-6 min-h-screen bg-app text-app">
-    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
-      <h1 class="text-2xl font-bold text-navbar">Gestión de Usuarios</h1>
-      <button 
-        @click="openCreateForm"
-        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors w-full sm:w-auto"
-      >
-        Nuevo Usuario
-      </button>
+  <section class="p-4 sm:p-8 min-h-screen bg-app text-app flex flex-col items-center">
+    <div class="w-full max-w-5xl">
+      <div v-if="userStore.loading" class="text-center py-12">
+        <div class="text-lg text-app font-medium">Cargando usuarios...</div>
+      </div>
+      <div v-else-if="userStore.error" class="text-red-600 text-center py-12 font-semibold">
+        {{ userStore.error }}
+      </div>
+      <div v-else class="overflow-x-auto rounded-2xl shadow-lg bg-card border border-app">
+        <table class="w-full min-w-[600px] border-collapse text-sm sm:text-base">
+          <thead>
+            <tr>
+              <th class="border-app p-4 text-left text-card font-bold uppercase tracking-wider bg-app">Nombre</th>
+              <th class="border-app p-4 text-left text-card font-bold uppercase tracking-wider bg-app">Username</th>
+              <th class="border-app p-4 text-left text-card font-bold uppercase tracking-wider bg-app">Email</th>
+              <th class="border-app p-4 text-left text-card font-bold uppercase tracking-wider bg-app">Teléfono</th>
+              <th class="border-app p-4 text-center text-card font-bold uppercase tracking-wider bg-app">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr 
+              v-for="user in userStore.users" 
+              :key="user.id" 
+              class="transition-colors row-hover"
+            >
+              <td class="border-app p-4 text-card align-middle">{{ user.name }}</td>
+              <td class="border-app p-4 text-card align-middle">{{ user.username }}</td>
+              <td class="border-app p-4 text-card align-middle">{{ user.email }}</td>
+              <td class="border-app p-4 text-card align-middle">{{ user.phone }}</td>
+              <td class="border-app p-4 text-center align-middle">
+                <div class="flex flex-col sm:flex-row gap-2 justify-center">
+                  <button 
+                    @click="handleEdit(user)"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold shadow transition-colors w-full sm:w-auto"
+                  >
+                    Editar
+                  </button>
+                  <button 
+                    @click="deleteUser(user)"
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold shadow transition-colors w-full sm:w-auto"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <UserForm 
+        v-if="showForm"
+        :user="selectedUserLocal"
+        :is-edit="isEditLocal"
+        @saved="handleSaved"
+        @cancel="handleCancel"
+      />
     </div>
-
-    <div v-if="userStore.loading" class="text-center py-8">
-      <div class="text-lg text-app">Cargando usuarios...</div>
-    </div>
-
-    <div v-else-if="userStore.error" class="text-red-600 text-center py-8">
-      {{ userStore.error }}
-    </div>
-
-    <div v-else class="overflow-x-auto rounded-lg shadow-sm">
-      <table class="w-full min-w-[600px] border-collapse border-app bg-card text-sm sm:text-base">
-        <thead class="bg-card">
-          <tr>
-            <th class="border-app p-3 text-left text-card whitespace-nowrap">
-              Nombre
-            </th>
-            <th class="border-app p-3 text-left text-card whitespace-nowrap">
-              Username
-            </th>
-            <th class="border-app p-3 text-left text-card whitespace-nowrap">
-              Email
-            </th>
-            <th class="border-app p-3 text-left text-card whitespace-nowrap">
-              Teléfono
-            </th>
-            <th class="border-app p-3 text-center text-card whitespace-nowrap">
-              Acciones
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr 
-            v-for="user in userStore.users" 
-            :key="user.id" 
-            class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-          >
-            <td class="border-app p-3 text-card">
-              {{ user.name }}
-            </td>
-            <td class="border-app p-3 text-card">
-              {{ user.username }}
-            </td>
-            <td class="border-app p-3 text-card">
-              {{ user.email }}
-            </td>
-            <td class="border-app p-3 text-card">
-              {{ user.phone }}
-            </td>
-            <td class="border-app p-3 text-center">
-              <div class="flex flex-col sm:flex-row gap-2 justify-center">
-                <button 
-                  @click="openEditForm(user)"
-                  class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors w-full sm:w-auto"
-                >
-                  Editar
-                </button>
-                <button 
-                  @click="deleteUser(user)"
-                  class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors w-full sm:w-auto"
-                >
-                  Eliminar
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <UserForm 
-      v-if="showForm"
-      :user="selectedUser"
-      :is-edit="isEdit"
-      @saved="handleSaved"
-      @cancel="handleCancel"
-    />
   </section>
 </template>
