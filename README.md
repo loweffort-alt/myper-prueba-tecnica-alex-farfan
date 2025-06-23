@@ -2,7 +2,7 @@
 
 ## Descripción del Proyecto
 
-Aplicación web desarrollada con Vue.js 3 para la gestión completa de usuarios (CRUD) que consume la API pública de JSONPlaceholder. Esta aplicación permite crear, leer, actualizar y eliminar usuarios de forma local tras la carga inicial desde la API.
+Aplicación web desarrollada con Vue.js 3 para la gestión completa de usuarios (CRUD) que consume la API pública de JSONPlaceholder. Permite crear, leer, actualizar y eliminar usuarios de forma local tras la carga inicial desde la API. **Incluye función de deshacer eliminación para mayor seguridad y mejor experiencia de usuario.**
 
 ## Características Principales
 
@@ -10,9 +10,11 @@ Aplicación web desarrollada con Vue.js 3 para la gestión completa de usuarios 
 - **Formularios modales** para crear y editar usuarios
 - **Validaciones** completas con feedback visual
 - **Confirmación de eliminación** antes de borrar usuarios
+- **Opción de deshacer eliminación** mediante un botón en el toast
 - **Gestión de estado local** - todas las operaciones CRUD se realizan en memoria
 - **Indicadores de carga** durante las peticiones a la API
 - **Diseño responsivo** con TailwindCSS
+- **Soporte para tema claro/oscuro** con cambio dinámico
 
 ## Tecnologías Utilizadas
 
@@ -35,17 +37,21 @@ La aplicación consume la API pública de JSONPlaceholder:
 
 ```
 src/
+├── assets/
+│   └── vue.svg
 ├── components/
-│   └── UserForm.vue          # Formulario modal para crear/editar usuarios
-├── views/
-│   └── UserList.vue          # Vista principal con tabla de usuarios
-├── store/
-│   └── user.js               # Store de Pinia para gestión de usuarios
+│   ├── ThemeToggle.vue        # Botón para alternar tema claro/oscuro
+│   ├── Toast.vue              # Toast reutilizable para mensajes y deshacer
+│   └── UserForm.vue           # Formulario modal para crear/editar usuarios
 ├── router/
-│   └── index.js              # Configuración de rutas
-├── App.vue                   # Componente principal
-├── main.js                   # Punto de entrada
-└── style.css                # Estilos globales
+│   └── index.js               # Configuración de rutas
+├── store/
+│   └── user.js                # Store de Pinia para gestión de usuarios
+├── views/
+│   └── UserList.vue           # Vista principal con tabla de usuarios
+├── App.vue                    # Componente principal
+├── main.js                    # Punto de entrada
+└── style.css                  # Estilos globales
 ```
 
 ## Instalación y Configuración
@@ -94,6 +100,7 @@ npm run build
 ### ✅ Eliminar Usuario
 - Confirmación antes de eliminar
 - Eliminación inmediata de la tabla
+- **Opción de deshacer**: Tras eliminar, aparece un toast con botón "Deshacer" para restaurar el usuario eliminado
 - Feedback visual de la acción
 
 ## Validaciones Implementadas
@@ -112,7 +119,7 @@ npm run build
 - ✅ **Manejo de estado local**: Pinia store para gestión completa del CRUD
 - ✅ **Validaciones y UX**: Validaciones completas con Vuelidate
 - ✅ **Legibilidad del código**: Código limpio, comentado y bien estructurado
-- ✅ **Componentes reutilizables**: Modal de formulario reutilizable
+- ✅ **Componentes reutilizables**: Modal de formulario reutilizable y toast para feedback
 - ✅ **Vue Router**: Navegación configurada (extensible)
 
 ## Decisiones de Diseño
@@ -130,8 +137,10 @@ npm run build
 ### Interfaz de Usuario
 - **Modal forms**: Mejor UX que formularios inline
 - **Confirmación de eliminación**: `confirm()` nativo según requerimientos
+- **Opción de deshacer eliminación**: Toast con botón para restaurar usuario eliminado
 - **Diseño responsivo**: Tabla adaptable a diferentes pantallas
 - **Estados de carga**: Indicadores visuales durante operaciones
+- **Tema claro/oscuro**: Alternancia de tema desde la interfaz
 
 ## Comandos Disponibles
 
@@ -168,6 +177,8 @@ npm run lint
 - **IDs automáticos**: Generación secuencial para nuevos usuarios
 - **Persistencia**: Datos se pierden al recargar (según especificaciones)
 - **Validación de email**: Implementada según requerimientos obligatorios
+- **Deshacer eliminación**: El usuario eliminado puede restaurarse solo mientras el toast está visible, después de ese tiempo la acción es definitiva.
+- **Tema claro/oscuro**: El usuario puede alternar el tema desde la interfaz.
 
 ## Autor
 
