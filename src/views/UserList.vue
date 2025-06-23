@@ -44,15 +44,15 @@ const deleteUser = (user) => {
 </script>
 
 <template>
-  <section class="p-4 sm:p-8 min-h-screen bg-app text-app flex flex-col items-center">
-    <div class="w-full max-w-5xl">
+  <section class="py-4 sm:py-8 min-h-screen bg-app text-app flex flex-col items-center">
+    <div class="w-full max-w-7xl">
       <div v-if="userStore.loading" class="text-center py-12">
         <div class="text-lg text-app font-medium">Cargando usuarios...</div>
       </div>
       <div v-else-if="userStore.error" class="text-red-600 text-center py-12 font-semibold">
         {{ userStore.error }}
       </div>
-      <div v-else class="overflow-x-auto rounded-2xl shadow-lg bg-card border border-app">
+      <div v-else class="overflow-x-auto shadow-lg bg-card border border-app">
         <table class="w-full min-w-[600px] border-collapse text-sm sm:text-base">
           <thead>
             <tr>

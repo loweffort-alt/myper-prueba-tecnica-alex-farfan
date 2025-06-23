@@ -54,10 +54,8 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex items-center justify-center">
-    <div class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm" @mousedown.self="$emit('cancel')">
     <div class="bg-modal p-8 rounded-2xl shadow-2xl w-full max-w-md mx-4 sm:mx-0 border border-app relative animate-fadeIn z-10">
-      <button @click="$emit('cancel')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors text-xl font-bold focus:outline-none">&times;</button>
       <h2 class="text-2xl font-bold mb-6 text-card tracking-wide text-center">{{ isEdit ? 'Editar' : 'Crear' }} Usuario</h2>
       <form @submit.prevent="handleSubmit" class="space-y-5">
         <div>
