@@ -54,67 +54,67 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center modal-backdrop">
-    <div class="bg-white dark:bg-gray-700 p-6 rounded-lg w-96 max-w-md mx-4 modal-content">
-      <h2 class="text-xl mb-4 text-gray-900 dark:text-white">
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center modal-backdrop z-50">
+    <div class="bg-card p-6 rounded-lg w-full max-w-md mx-4 sm:mx-0 modal-content shadow-lg">
+      <h2 class="text-xl mb-4 text-card">
         {{ isEdit ? 'Editar' : 'Crear' }} Usuario
       </h2>
       
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-1">Nombre</label>
+          <label class="block text-card mb-1">Nombre</label>
           <input 
             v-model="form.name" 
             type="text" 
-            class="w-full border p-2 rounded bg-white dark:bg-gray-600 text-gray-900 dark:text-white border-gray-300 dark:border-gray-500"
+            class="w-full border p-2 rounded bg-card text-card border-app focus:ring-2 focus:ring-emerald-500"
             :class="{ 'border-red-500': v$.name.$error }"
           />
           <p v-if="v$.name.$error" class="text-red-500 text-sm mt-1">Nombre es obligatorio</p>
         </div>
 
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-1">Username</label>
+          <label class="block text-card mb-1">Username</label>
           <input 
             v-model="form.username" 
             type="text" 
-            class="w-full border p-2 rounded bg-white dark:bg-gray-600 text-gray-900 dark:text-white border-gray-300 dark:border-gray-500"
+            class="w-full border p-2 rounded bg-card text-card border-app focus:ring-2 focus:ring-emerald-500"
             :class="{ 'border-red-500': v$.username.$error }"
           />
           <p v-if="v$.username.$error" class="text-red-500 text-sm mt-1">Username es obligatorio</p>
         </div>
 
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-1">Email</label>
+          <label class="block text-card mb-1">Email</label>
           <input 
             v-model="form.email" 
             type="email" 
-            class="w-full border p-2 rounded bg-white dark:bg-gray-600 text-gray-900 dark:text-white border-gray-300 dark:border-gray-500"
+            class="w-full border p-2 rounded bg-card text-card border-app focus:ring-2 focus:ring-emerald-500"
             :class="{ 'border-red-500': v$.email.$error }"
           />
           <p v-if="v$.email.$error" class="text-red-500 text-sm mt-1">Email válido es obligatorio</p>
         </div>
 
         <div>
-          <label class="block text-gray-700 dark:text-gray-300 mb-1">Teléfono</label>
+          <label class="block text-card mb-1">Teléfono</label>
           <input 
             v-model="form.phone" 
             type="text" 
-            class="w-full border p-2 rounded bg-white dark:bg-gray-600 text-gray-900 dark:text-white border-gray-300 dark:border-gray-500"
+            class="w-full border p-2 rounded bg-card text-card border-app focus:ring-2 focus:ring-emerald-500"
             :class="{ 'border-red-500': v$.phone.$error }"
           />
           <p v-if="v$.phone.$error" class="text-red-500 text-sm mt-1">Teléfono es obligatorio</p>
         </div>
 
-        <div class="flex gap-4 pt-4">
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-4 pt-4">
           <button 
             type="submit" 
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors w-full sm:w-auto"
           >
             {{ isEdit ? 'Actualizar' : 'Crear' }}
           </button>
           <button 
             type="button" 
-            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors" 
+            class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors w-full sm:w-auto" 
             @click="$emit('cancel')"
           >
             Cancelar

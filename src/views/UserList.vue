@@ -42,42 +42,42 @@ const deleteUser = (user) => {
 </script>
 
 <template>
-  <section class="p-6 min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Gestión de Usuarios</h1>
+  <section class="p-4 sm:p-6 min-h-screen bg-app text-app">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
+      <h1 class="text-2xl font-bold text-navbar">Gestión de Usuarios</h1>
       <button 
         @click="openCreateForm"
-        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors"
+        class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors w-full sm:w-auto"
       >
         Nuevo Usuario
       </button>
     </div>
 
     <div v-if="userStore.loading" class="text-center py-8">
-      <div class="text-lg text-gray-700 dark:text-gray-300">Cargando usuarios...</div>
+      <div class="text-lg text-app">Cargando usuarios...</div>
     </div>
 
     <div v-else-if="userStore.error" class="text-red-600 text-center py-8">
       {{ userStore.error }}
     </div>
 
-    <div v-else class="overflow-x-auto">
-      <table class="w-full border-collapse border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800">
-        <thead class="bg-gray-100 dark:bg-gray-700">
+    <div v-else class="overflow-x-auto rounded-lg shadow-sm">
+      <table class="w-full min-w-[600px] border-collapse border-app bg-card text-sm sm:text-base">
+        <thead class="bg-card">
           <tr>
-            <th class="border border-gray-300 dark:border-gray-600 p-3 text-left text-gray-900 dark:text-white">
+            <th class="border-app p-3 text-left text-card whitespace-nowrap">
               Nombre
             </th>
-            <th class="border border-gray-300 dark:border-gray-600 p-3 text-left text-gray-900 dark:text-white">
+            <th class="border-app p-3 text-left text-card whitespace-nowrap">
               Username
             </th>
-            <th class="border border-gray-300 dark:border-gray-600 p-3 text-left text-gray-900 dark:text-white">
+            <th class="border-app p-3 text-left text-card whitespace-nowrap">
               Email
             </th>
-            <th class="border border-gray-300 dark:border-gray-600 p-3 text-left text-gray-900 dark:text-white">
+            <th class="border-app p-3 text-left text-card whitespace-nowrap">
               Teléfono
             </th>
-            <th class="border border-gray-300 dark:border-gray-600 p-3 text-center text-gray-900 dark:text-white">
+            <th class="border-app p-3 text-center text-card whitespace-nowrap">
               Acciones
             </th>
           </tr>
@@ -88,29 +88,29 @@ const deleteUser = (user) => {
             :key="user.id" 
             class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
-            <td class="border border-gray-300 dark:border-gray-600 p-3 text-gray-900 dark:text-white">
+            <td class="border-app p-3 text-card">
               {{ user.name }}
             </td>
-            <td class="border border-gray-300 dark:border-gray-600 p-3 text-gray-900 dark:text-white">
+            <td class="border-app p-3 text-card">
               {{ user.username }}
             </td>
-            <td class="border border-gray-300 dark:border-gray-600 p-3 text-gray-900 dark:text-white">
+            <td class="border-app p-3 text-card">
               {{ user.email }}
             </td>
-            <td class="border border-gray-300 dark:border-gray-600 p-3 text-gray-900 dark:text-white">
+            <td class="border-app p-3 text-card">
               {{ user.phone }}
             </td>
-            <td class="border border-gray-300 dark:border-gray-600 p-3 text-center">
-              <div class="flex gap-2 justify-center">
+            <td class="border-app p-3 text-center">
+              <div class="flex flex-col sm:flex-row gap-2 justify-center">
                 <button 
                   @click="openEditForm(user)"
-                  class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                  class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition-colors w-full sm:w-auto"
                 >
                   Editar
                 </button>
                 <button 
                   @click="deleteUser(user)"
-                  class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                  class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors w-full sm:w-auto"
                 >
                   Eliminar
                 </button>
